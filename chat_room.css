@@ -1,0 +1,27 @@
+#total_users_div {
+	margin-left:auto;
+	margin-right:auto;
+	text-align:right;
+}
+#chat_div {
+	margin-left:auto;
+	margin-right:auto;
+	width:100%;
+}
+#msg_list {
+	border:1px solid black;
+	height:250px;
+	overflow-y:auto;
+	resize:vertical;
+	padding:7px;
+}
+#post {
+	width:100%;
+	resize:none;
+	font-size:18px;
+} 
+#submit_post_btn {
+	float:right;
+	width:100px;
+	color:green;
+}
