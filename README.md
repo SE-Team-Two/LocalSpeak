@@ -8,11 +8,11 @@ Current file structure for the project is as follows :
         layout.html
         chat_room.html
     > static
-        js
-        chat_room.js
-    > css
-        style.css
-        chat_room.css
+        > js
+            chat_room.js
+        > css
+            style.css
+            chat_room.css
 ```
 app.py is the main flask application module and should be in the root of your project folder.
 
