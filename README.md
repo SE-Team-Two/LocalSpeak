@@ -15,5 +15,7 @@ Current file structure for the project is as follows :
         chat_room.css
 ```
 app.py is the main flask application module and should be in the root of your project folder.
+
 To see changes run the application from the command line using: `python app.py`
+
 Web pages are rendered @ the localhost on port 5000. (127.0.0.1:5000)
