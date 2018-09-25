@@ -20,8 +20,8 @@ class Coordinate:
    def getLongitudeRadians(self):
       return math.radians(self.getLongitude())
 
-   def haversineDistance(self, otherCoord):
-      earthRadius = 6371.0
+   def distanceInMeters(self, otherCoord):
+      earthRadiusInMeters = 6371000.0
       deltaLat = (otherCoord.getLatitudeRadians() - self.getLatitudeRadians())
       deltaLong = (otherCoord.getLongitudeRadians() - self.getLongitudeRadians())
       
@@ -29,4 +29,4 @@ class Coordinate:
           math.cos(self.getLatitudeRadians()) * math.cos(otherCoord.getLatitudeRadians()) * 
           math.sin(deltaLong / 2) * math.sin(deltaLong / 2))
       c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-      return earthRadius * c
+      return earthRadiusInMeters * c
