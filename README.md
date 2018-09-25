@@ -2,7 +2,7 @@
 
 Current file structure for the project is as follows :
 ```
-> Project Folder
+> src
     app.py
     > templates
         layout.html
