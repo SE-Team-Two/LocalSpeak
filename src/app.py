@@ -8,7 +8,7 @@ socketio = SocketIO(app)
 @socketio.on('message')
 def handleMessage(msg):
    print('Message: ' + msg)
-   send(msg, broadcast=True);
+   send(msg, broadcast=True, include_self=False);
 
 @app.route("/")
 def index() :
