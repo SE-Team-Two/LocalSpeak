@@ -15,10 +15,10 @@ connections = dict()
 def handleMessage(msg):
    print('Message: ' + msg)
 
-   for k, v in connections.items():
-      if(k != request.sid):
-         if(v.position.distanceInMeters(connections[request.sid].position) < v.radius):
-            send(msg, room=k)
+   for key, value in connections.items():
+      if(key != request.sid):
+         if(value.position.distanceInMeters(connections[request.sid].position) < value.radius):
+            send(msg, room=key)
 
 @socketio.on('location')
 def recievedLocation(data):
