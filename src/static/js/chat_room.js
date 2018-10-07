@@ -27,4 +27,8 @@ $(document).ready(function () {
       displayedMessage.innerHTML= msg;
       chat.appendChild(displayedMessage);
    });
+
+   $(window).on('beforeunload',function(){
+      socket.disconnect();
+   });
 });

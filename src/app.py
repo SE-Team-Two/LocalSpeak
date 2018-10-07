@@ -22,6 +22,8 @@ def handleMessage(msg):
 
 @socketio.on('location')
 def recievedLocation(data):
+   print("Recieved location data from: " + request.sid + "\n")
+   
    coord = Coordinate()
    coord.setLatitude(data['lat'])
    coord.setLongitude(data['lon'])
@@ -31,7 +33,11 @@ def recievedLocation(data):
    userData.setRadius(data['radius'])
 
    connections[request.sid] = userData
-   
+
+@socketio.on('disconnect')
+def userDisconnected():
+   print("UserID disconnected: " + request.sid + "\n")
+   connections.pop(request.sid, None)
 
 @app.route("/")
 def index():
