@@ -1,5 +1,5 @@
 $(document).ready(function () {
-   var socket = io.connect('http://' + document.domain + ":" + location.port);
+   var socket = io.connect('https://' + document.domain + ":" + location.port);
    
    $("#submit_post_btn").click(function () {
       chat = document.getElementById("msg_list");
@@ -9,6 +9,17 @@ $(document).ready(function () {
       msg.style = "text-align:right;";
       socket.send(document.getElementById("post").value);
       document.getElementById("post").value = "";
+   });
+
+   $("#send_location").click(function () {
+      navigator.geolocation.getCurrentPosition(function(position) { 
+         socket.emit('location', {
+            'lat' : position.coords.latitude,
+            'lon' : position.coords.longitude,
+            'radius' : 500
+         });
+      });
+
    });
 
    socket.on('connect', function() {
