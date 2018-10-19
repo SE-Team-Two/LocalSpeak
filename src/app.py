@@ -22,8 +22,10 @@ def handleMessage(msg):
 
 @socketio.on('location')
 def recievedLocation(data):
-   print("Recieved location data from: " + request.sid + "\n")
-   
+   print("Recieved location data from: " + request.sid + ".\n")
+   print("Latitude: " + str(data['lat']) + "\n")
+   print("Longitude: " + str(data['lon']) + "\n")
+
    coord = Coordinate()
    coord.setLatitude(data['lat'])
    coord.setLongitude(data['lon'])
