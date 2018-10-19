@@ -16,7 +16,7 @@ $(document).ready(function () {
          socket.emit('location', {
             'lat' : position.coords.latitude,
             'lon' : position.coords.longitude,
-            'radius' : 500
+            'radius' : 5
          });
       });
 
@@ -27,7 +27,7 @@ $(document).ready(function () {
          socket.emit('location', {
             'lat' : position.coords.latitude,
             'lon' : position.coords.longitude,
-            'radius' : 1000 
+            'radius' : 5 
          });
       });
    });
