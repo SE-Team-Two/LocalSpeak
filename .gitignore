@@ -105,3 +105,4 @@ venv.bak/
 
 #Visual Studio files
 *.pyproj
+.vs
