@@ -1,6 +1,8 @@
 $(document).ready(function () {
    var socket = io.connect('https://' + document.domain + ":" + location.port);
    
+   var defaultRadius = 20;
+
    function sendFromTextBox() {
       chat = document.getElementById("msg_list");
       msg = document.createElement('p');
@@ -10,6 +12,16 @@ $(document).ready(function () {
       socket.send(document.getElementById("post").value);
       document.getElementById("post").value = "";
       chat.scrollTop = chat.scrollHeight;
+   }
+   
+
+   // TODO: should become sendPosition and sendRadius later
+   function sendData(lat, lon, radius) {
+      socket.emit('location', {
+         'lat': lat,
+         'lon': lon,
+         'radius': radius
+      });
    }
 
    $("#submit_post_btn").click(function () {
@@ -26,22 +38,14 @@ $(document).ready(function () {
 
    $("#send_location").click(function () {
       navigator.geolocation.getCurrentPosition(function(position) { 
-         socket.emit('location', {
-            'lat' : position.coords.latitude,
-            'lon' : position.coords.longitude,
-            'radius' : 5
-         });
+         sendData(position.coords.latitude, position.coords.longitude, defaultRadius);
       });
 
    });
 
    socket.on('connect', function() {
       navigator.geolocation.getCurrentPosition(function(position) { 
-         socket.emit('location', {
-            'lat' : position.coords.latitude,
-            'lon' : position.coords.longitude,
-            'radius' : 5 
-         });
+         sendData(position.coords.latitude, position.coords.longitude, defaultRadius);
       });
    });
 
