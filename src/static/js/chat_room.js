@@ -50,6 +50,7 @@ $(document).ready(function () {
       displayedMessage = document.createElement('p');
       displayedMessage.innerHTML= msg;
       chat.appendChild(displayedMessage);
+      chat.scrollTop = chat.scrollHeight;
    });
 
    $(window).on('beforeunload',function(){
