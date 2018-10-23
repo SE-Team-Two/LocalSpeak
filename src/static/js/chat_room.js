@@ -9,6 +9,7 @@ $(document).ready(function () {
       msg.style = "text-align:right;";
       socket.send(document.getElementById("post").value);
       document.getElementById("post").value = "";
+	  chat.scrollTop = chat.scrollHeight;
    });
 
    $("#send_location").click(function () {
