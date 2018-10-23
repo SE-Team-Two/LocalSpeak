@@ -21,7 +21,8 @@
     {% block chat_room_imports %}{% endblock chat_room_imports %}
 
     <script>
-     $(document).ready(function () {
+     // CHAT ROOM TOGGLE BUTTON FUNCTION
+	 /*$(document).ready(function () {
       $("#menu_toggle").click( function () {
         if ($("#sidebar").width() == 250) {
           $("#sidebar").css({"width":"0px"});
@@ -32,25 +33,26 @@
           $("#main").css({"margin-left":"250px"});
         } 
       });
-    });
+    });*/
   </script>
 
   </head>
   <body>
     
-    <div id="navbar">
+	<!-- CHAT ROOMS AND TOGGLE BUTTON -->
+    <!-- <div id="navbar">
       <button type="button" id="menu_toggle">Toggle</button>
     </div>
     
-    <div id="sidebar">
+     <div id="sidebar">
       <p id="menu_header"> Rooms In Your Area </p>
       <p class="room_item"> test room </p>
       <p class="room_item"> test room </p>
       <p class="room_item"> test room </p>
-    </div>
+    </div> -->
     
     <div id="main">
-      <h1>Global Chat</h1>
+      <h1>Test Chat</h1>
       
       {% block chat_room %}{% endblock chat_room %}
 
