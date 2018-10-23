@@ -1,7 +1,7 @@
 $(document).ready(function () {
    var socket = io.connect('https://' + document.domain + ":" + location.port);
    
-   $("#submit_post_btn").click(function () {
+   function sendFromTextBox() {
       chat = document.getElementById("msg_list");
       msg = document.createElement('p');
       msg.innerHTML = document.getElementById("post").value;
@@ -9,7 +9,19 @@ $(document).ready(function () {
       msg.style = "text-align:right;";
       socket.send(document.getElementById("post").value);
       document.getElementById("post").value = "";
-	  chat.scrollTop = chat.scrollHeight;
+      chat.scrollTop = chat.scrollHeight;
+   }
+
+   $("#submit_post_btn").click(function () {
+      sendFromTextBox();
+   });
+
+   $("#post").on('keydown', function(event) {
+      if(event.key == "Enter") {
+         event.preventDefault();
+
+         sendFromTextBox();
+      }
    });
 
    $("#send_location").click(function () {
