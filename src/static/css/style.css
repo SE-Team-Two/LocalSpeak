@@ -17,6 +17,16 @@ h1 {
 	padding-top:5px;
 	transition: width .5s;
 } */
+#logo_01{
+	width: 128px; 
+	height: 128px;
+	margin-left: 2vw;
+}
+
+#chat_title{
+	
+}
+
 #main {
 	/*margin-left:250px;
 	margin-top:40px;*/
