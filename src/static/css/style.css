@@ -1,4 +1,8 @@
 html {
+	overflow: hidden;
+}
+body{
+	background-color: #52565C;
 }
 h1 {
 	margin-left:auto;
@@ -21,6 +25,7 @@ h1 {
 	width: 128px; 
 	height: 128px;
 	margin-left: 2vw;
+	background-color: #35383C;
 }
 
 #chat_title{

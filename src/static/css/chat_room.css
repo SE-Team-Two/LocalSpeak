@@ -15,14 +15,18 @@
 	overflow-y: scroll;
 	resize:vertical;
 	padding:7px;
+	background-color: #353739;
+	font-size: 24px;
 }
 #post {
 	width:100%;
 	resize:none;
 	font-size:18px;
+	background-color: #353739;
 } 
 #submit_post_btn {
 	float:right;
 	width:100px;
-	color:green;
+	color:white;
+	background-color: #353739;
 }
