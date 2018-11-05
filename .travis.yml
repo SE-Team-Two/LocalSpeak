@@ -5,4 +5,5 @@ python:
 
 
 script:
+   - cd test
    - pytest
