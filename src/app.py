@@ -46,4 +46,4 @@ def index():
 	return render_template("chat_room.html")
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', ssl_context='adhoc') #app.run(Debug=True)
+	app.run(host='0.0.0.0', ssl_context='adhoc') # , port=443) #app.run(Debug=True)
