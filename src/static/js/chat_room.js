@@ -29,6 +29,8 @@ $(document).ready(function () {
 	  msg.style.backgroundColor = colorPicker(Math.floor(Math.random() * Math.floor(9)));
 	  msg.style.clear = "both";
 	  msg.style.float = "right";
+	  msg.style.fontFamily = "Limelight";
+	  msg.style.color = "#000000";
 	  chat.scrollTop = chat.scrollHeight;
    }
    
