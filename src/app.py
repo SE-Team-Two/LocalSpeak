@@ -11,6 +11,7 @@ socketio = SocketIO(app)
 
 connections = dict()
 
+#Called when the server recieves a message from the client that is marked as a 'message' (chat)
 @socketio.on('message')
 def handleMessage(msg):
    print('Message: ' + msg)
@@ -20,6 +21,7 @@ def handleMessage(msg):
          if(value.position.distanceInMeters(connections[request.sid].position) < value.radius):
             send(msg, room=key)
 
+#Called when the server recieves a message from the client that is marked as 'location'
 @socketio.on('location')
 def recievedLocation(data):
    print("Recieved location data from: " + request.sid + ".\n")
@@ -36,11 +38,13 @@ def recievedLocation(data):
 
    connections[request.sid] = userData
 
+#Called when a websocket connection is disconnected (that connection becomes unresponsive, for example if someone closes the browser window). 
 @socketio.on('disconnect')
 def userDisconnected():
    print("UserID disconnected: " + request.sid + "\n")
    connections.pop(request.sid, None)
 
+#When a user opens up the webpage, send the html file along with the css and javascript. 
 @app.route("/")
 def index():
 	return render_template("chat_room.html")
