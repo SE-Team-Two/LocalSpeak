@@ -4,9 +4,7 @@ $(document).ready(function () {
 	var defaultRadius = 10000;
 	
 	var receivingMsgSwitcher = 0; //switches message receiving function in order to assign user-specific color
-	
 	var amtOfColors = 15;
-	
 	var myColor = colorPicker(Math.floor(Math.random() * Math.floor(9)));
 
    function colorPicker(x){
@@ -28,28 +26,29 @@ $(document).ready(function () {
 		   case "e": return "Crimson"; break;
 	   }
    }
+   
    //TODO: set user-color to the same as others see
    function sendFromTextBox() {
       chat = document.getElementById("msg_list");
       msg = document.createElement('p');
       msg.innerHTML = document.getElementById("post").value;
       chat.appendChild(msg);
-      msg.style = "text-align:right;";
       socket.send(document.getElementById("post").value);
       document.getElementById("post").value = "";
 	  msg.style.clear = "both";
+	  msg.style = "text-align:right;";
 	  msg.style.fontFamily = "Limelight";
 	  //msg.style.color = myColor;
 	  chat.scrollTop = chat.scrollHeight;
    }
 
+   
    // TODO: should become sendPosition and sendRadius later
-   function sendData(lat, lon, radius, color) {
+   function sendData(lat, lon, radius) {
       socket.emit('location', {
          'lat': lat,
          'lon': lon,
-         'radius': radius,
-		 'color': color
+         'radius': radius
       });
    }
 
@@ -67,17 +66,21 @@ $(document).ready(function () {
 
    $("#send_location").click(function () {
       navigator.geolocation.getCurrentPosition(function(position) { 
-         sendData(position.coords.latitude, position.coords.longitude, defaultRadius, myColor);
+         sendData(position.coords.latitude, position.coords.longitude, defaultRadius);
       });
    });
 
    socket.on('connect', function() {
       navigator.geolocation.getCurrentPosition(function(position) { 
-         sendData(position.coords.latitude, position.coords.longitude, defaultRadius, myColor);
+         sendData(position.coords.latitude, position.coords.longitude, defaultRadius);
       });
    });
    
-//TODO: need to find a way to distinguish between different received messages in order to change color per user
+   socket.on('updateUsers', function(param) {
+		users = document.getElementById("user_count");
+		users.innerHTML = param;
+   });
+   
    socket.on('message', function(msg) {
 	if(receivingMsgSwitcher == 0){
 		chat = document.getElementById("msg_list");
