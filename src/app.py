@@ -4,7 +4,6 @@ from coordinate import Coordinate
 from userdata import UserData
 import json
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secretytypeword!'
 socketio = SocketIO(app)
@@ -14,20 +13,26 @@ connections = dict()
 #Called when the server recieves a message from the client that is marked as a 'message' (chat)
 @socketio.on('message')
 def handleMessage(msg):
-   print('Message: ' + msg)
-
-   for key, value in connections.items():
-      if(key != request.sid):
-         if(value.position.distanceInMeters(connections[request.sid].position) < value.radius):
-            send(msg, room=key)
-
+	print("Message: " + msg)
+	print("Recieved message from: " + request.sid + ".\n")
+	print("Color ID of sender: " + request.sid[:1])
+	
+	colorId = request.sid[:1]
+	
+	for key, value in connections.items():
+		if(key != request.sid):
+			if(value.position.distanceInMeters(connections[request.sid].position) < value.radius):
+				send(msg, room=key)		#contains message
+				send(colorId, room=key)	#contains color of user messages
+   
 #Called when the server recieves a message from the client that is marked as 'location'
 @socketio.on('location')
 def recievedLocation(data):
    print("Recieved location data from: " + request.sid + ".\n")
    print("Latitude: " + str(data['lat']) + "\n")
    print("Longitude: " + str(data['lon']) + "\n")
-
+   print("Radius: " + str(data['radius']) + "\n")
+   
    coord = Coordinate()
    coord.setLatitude(data['lat'])
    coord.setLongitude(data['lon'])
@@ -35,7 +40,7 @@ def recievedLocation(data):
    userData = UserData()
    userData.setPosition(coord)
    userData.setRadius(data['radius'])
-
+   
    connections[request.sid] = userData
 
 #Called when a websocket connection is disconnected (that connection becomes unresponsive, for example if someone closes the browser window). 
