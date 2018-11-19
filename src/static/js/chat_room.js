@@ -1,23 +1,34 @@
 $(document).ready(function () {
-   var socket = io.connect('https://' + document.domain + ":" + location.port);
-   
-   var defaultRadius = 10000;
+	var socket = io.connect('https://' + document.domain + ":" + location.port);
+
+	var defaultRadius = 10000;
+	
+	var receivingMsgSwitcher = 0; //switches message receiving function in order to assign user-specific color
+	
+	var amtOfColors = 15;
+	
+	var myColor = colorPicker(Math.floor(Math.random() * Math.floor(9)));
 
    function colorPicker(x){
 	   switch(x){
-		   case 0: return "Aqua"; break;
-		   case 1: return "Beige"; break;
-		   case 2: return "Brown"; break;
-		   case 3: return "Coral"; break;
-		   case 4: return "Crimson"; break;
-		   case 5: return "DarkMagenta"; break;
-		   case 6: return "DarkSlateGray"; break;
-		   case 7: return "DimGray"; break;
-		   case 8: return "ForestGreen"; break;
-		   case 9: return "Gold"; break;
+		   case "0": return "Aqua"; break;
+		   case "1": return "Beige"; break;
+		   case "2": return "Brown"; break;
+		   case "3": return "Coral"; break;
+		   case "4": return "Crimson"; break;
+		   case "5": return "DarkMagenta"; break;
+		   case "6": return "DarkSlateGray"; break;
+		   case "7": return "DimGray"; break;
+		   case "8": return "ForestGreen"; break;
+		   case "9": return "Gold"; break;
+		   case "a": return "Aqua"; break;
+		   case "b": return "Beige"; break;
+		   case "c": return "Brown"; break;
+		   case "d": return "Coral"; break;
+		   case "e": return "Crimson"; break;
 	   }
    }
-   
+   //TODO: set user-color to the same as others see
    function sendFromTextBox() {
       chat = document.getElementById("msg_list");
       msg = document.createElement('p');
@@ -26,24 +37,19 @@ $(document).ready(function () {
       msg.style = "text-align:right;";
       socket.send(document.getElementById("post").value);
       document.getElementById("post").value = "";
-	  msg.style.backgroundColor = colorPicker(Math.floor(Math.random() * Math.floor(9)));
 	  msg.style.clear = "both";
-	  msg.style.float = "right";
 	  msg.style.fontFamily = "Limelight";
-	  msg.style.color = "#000000";
+	  //msg.style.color = myColor;
 	  chat.scrollTop = chat.scrollHeight;
-   }
-   
-   function setColor() {
-	   
    }
 
    // TODO: should become sendPosition and sendRadius later
-   function sendData(lat, lon, radius) {
+   function sendData(lat, lon, radius, color) {
       socket.emit('location', {
          'lat': lat,
          'lon': lon,
-         'radius': radius
+         'radius': radius,
+		 'color': color
       });
    }
 
@@ -61,23 +67,33 @@ $(document).ready(function () {
 
    $("#send_location").click(function () {
       navigator.geolocation.getCurrentPosition(function(position) { 
-         sendData(position.coords.latitude, position.coords.longitude, defaultRadius);
+         sendData(position.coords.latitude, position.coords.longitude, defaultRadius, myColor);
       });
-
    });
 
    socket.on('connect', function() {
       navigator.geolocation.getCurrentPosition(function(position) { 
-         sendData(position.coords.latitude, position.coords.longitude, defaultRadius);
+         sendData(position.coords.latitude, position.coords.longitude, defaultRadius, myColor);
       });
    });
-
+   
+//TODO: need to find a way to distinguish between different received messages in order to change color per user
    socket.on('message', function(msg) {
-      chat = document.getElementById("msg_list");
-      displayedMessage = document.createElement('p');
-      displayedMessage.innerHTML= msg;
-      chat.appendChild(displayedMessage);
-      chat.scrollTop = chat.scrollHeight;
+	if(receivingMsgSwitcher == 0){
+		chat = document.getElementById("msg_list");
+		displayedMessage = document.createElement('p');
+		displayedMessage.innerHTML = msg;
+		chat.appendChild(displayedMessage);
+		chat.scrollTop = chat.scrollHeight;
+		displayedMessage.style.fontFamily = "Limelight";
+		
+		receivingMsgSwitcher = receivingMsgSwitcher + 1;
+	}
+	else if(receivingMsgSwitcher == 1){
+		displayedMessage.style.color = colorPicker(msg);
+		
+		receivingMsgSwitcher = receivingMsgSwitcher - 1;
+	}
    });
 
    $(window).on('beforeunload',function(){
