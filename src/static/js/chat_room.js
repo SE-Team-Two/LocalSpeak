@@ -1,11 +1,13 @@
 $(document).ready(function () {
-	
-	var defaultRadius = 10000;
+	var socket = io.connect('https://' + document.domain + ":" + location.port);
 
+	var defaultRadius = 10000;
+	
+	var receivingMsgSwitcher = 0; //switches message receiving function in order to assign user-specific color
 	var amtOfColors = 15;
 	var myColor = colorPicker(Math.floor(Math.random() * Math.floor(9)));
 
-	function colorPicker(x){
+   function colorPicker(x){
 	   switch(x){
 		   case "0": return "Aqua"; break;
 		   case "1": return "Beige"; break;
@@ -23,60 +25,8 @@ $(document).ready(function () {
 		   case "d": return "Coral"; break;
 		   case "e": return "Crimson"; break;
 	   }
-	}
+   }
    
-
-	//'when chat button is clicked' function
-	$('#chat_btn').on('click', function(){	
-		sendFromTextBox();
-	});
-	//when enter is pressed, ******TODO:******* does not work
-	$('input').on('keypress', function(e) {
-		var code = e.keyCode || e.which;
-		if(code==13){
-			event.preventDefault();
-
-			sendFromTextBox();
-		}
-	});
-	
-	// Enable pusher logging - don't include this in production
-	Pusher.logToConsole = true;
-	//pusher gobble-dee-gook
-	var pusher = new Pusher('55582ce081a240a72f45', {
-	  cluster: 'us2',
-	  forceTLS: true
-	});
-
-	var channel = pusher.subscribe('chat-channel');
-	channel.bind('new-message', function(data) {
-		let message = data.message;
-		
-
-		let message_template = `<article class="media">
-								  <div class="media-content">
-									<div class="content">
-									  <p>
-										<strong>Anonymous</strong>
-										<br> ${message}
-									  </p>
-									</div>
-								  </div>
-								</article>`;
-								
-		$('#content').append(message_template);	//appends sent message to bottom of message_template
-		$("#msg_list").animate({ scrollTop: $('#msg_list')[0].scrollHeight}, 1000);
-	});
-	//sends message over to pusher and erases whats in the text box
-	function sendFromTextBox(){
-		let message = $('#chat_text').val();
-		
-		$.post('/message', {'message' : message}, function(){
-			$('#chat_text').val('');
-		});
-	}
-   
-   /*
    //TODO: set user-color to the same as others see
    function sendFromTextBox() {
       chat = document.getElementById("msg_list");
@@ -152,5 +102,4 @@ $(document).ready(function () {
    $(window).on('beforeunload',function(){
       socket.disconnect();
    });
-   */
 });
