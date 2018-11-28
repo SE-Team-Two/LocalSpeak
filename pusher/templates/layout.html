@@ -29,11 +29,17 @@
         save_user(SID,'{{curr_usr}}',curr_room);
         load_chat('{{ curr_usr }}',curr_room);
       });
-      $("#name").attr({"required":"true","pattern":"[A-Za-z0-9.'&_]{1,64}",
+      $("#name").attr({"required":"true","pattern":"[A-Za-z0-9.&_=@,]{1,64}",
                        "autocomplete":"off"});
+      $("#name").keydown(function (event) {
+        if (event.keyCode == 32) {
+          this.value= this.value+'_';
+          return false;
+        }
+      });
       $("#expire").attr({"required":"true"});
       document.getElementById("name").value= "";
-      document.getElementById("expire").value= "";
+      document.getElementById("expire").value= "1";
       get_rooms();
       function get_rooms() {
         $.post('/get/rooms',
@@ -222,18 +228,22 @@
       $("#submit_room_btn").click( function () {
         if ($("#create_room_form")[0].checkValidity()) {
           $("#background_div").css({"display":"none"});
+          $(".room_error").css({'display':'none'});
           $.post('/create/'+document.getElementById("name").value,
                   {name:document.getElementById("name").value,username:"{{ curr_usr }}",
                    time:document.getElementById("expire").value}
           );
           document.getElementById("name").value= "";
-          document.getElementById("expire").value= "";
+          document.getElementById("expire").value= "1";
         }
+        else 
+          $(".room_error").css({'display':'block'});
       });
       $("#close_btn").click( function () {
         $("#background_div").css({"display":"none"});
+        $(".room_error").css({'display':'none'});
         document.getElementById("name").value= "";
-        document.getElementById("expire").value= "";
+        document.getElementById("expire").value= "1";
       });
       $("#menu_toggle").click( function () {
         if ($("#sidebar").width() == 250) {
@@ -273,19 +283,27 @@
       <div id="create_room_div">
         <span id="close_btn">&times;</span> <br>
         <form id="create_room_form">
-          <label>Room Name:</label>
-          <input type="text" id="name" name="name"> <br>
-          <label>Expire:</label>
-          <select id="expire" name="expire">
-            <option value="1">1 Hour</option>
-            <option value="2">2 Hours</option>
-            <option value="3">3 Hours</option>
-            <option value="6">6 Hours</option>
-            <option value="12">12 Hours</option>
-            <option value="24">24 Hours</option>
-          </select> <br>
+          <div style="height:70px;">
+            <label style="float:left;margin-top:5px;">Room Name:</label>
+            <input type="text" id="name" name="name">
+            <span id="required">* </span> <br>
+            <label style="float:left;margin-top:20px;">Expire:</label>
+            <select id="expire" name="expire">
+              <option value="1">1 Hour</option>
+              <option value="2">2 Hours</option>
+              <option value="3">3 Hours</option>
+              <option value="6">6 Hours</option>
+              <option value="12">12 Hours</option>
+              <option value="24">24 Hours</option>
+            </select>
+          </div> <br>
           <div style="text-align:center;">
             <button type="button" id="submit_room_btn">Create Room</button>
+          </div>
+          <div style="text-align:center;">
+            <span class="room_error">Room name is not valid!</span>
+            <span class="room_error">32 character max.</span>
+            <span class="room_error">Special characters include (. & _ = @ ,)</span>
           </div>
         </form>
       </div>
