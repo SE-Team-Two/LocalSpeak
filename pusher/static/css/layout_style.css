@@ -5,6 +5,13 @@ h1 {
 	margin-right:auto;
 	text-align:center;
 }
+.room_error {
+	margin-left:auto;
+	margin-right:auto;
+	font-size:12px;
+	color:red;
+	display:none;
+}
 #current_user {
 	position:fixed;
 	top:10px;
@@ -100,17 +107,19 @@ h1 {
   width:40%; 
 }
 #create_room_form {
-	margin:5% auto;
+	margin:3% auto;
 	width:80%; 
 }
 #name {
-	width:230px;
-	margin-left:10%;
+	width:250px;
+	margin-left:2%;
 	margin-bottom:10px;
+	float:right;
 }
 #expire {
 	width:150px;
-	margin-left:44%;
+	margin-left:1%;
+	float:right;
 	margin-bottom:20px;
 }
 #close_btn {
@@ -123,10 +132,16 @@ h1 {
   color:black;
   cursor:pointer;
 }
+#required {
+	color:red;
+	font-size:12px;
+	float:right;
+}
 #submit_room_btn {
 	color:green;
 	margin-left:auto;
 	margin-right:auto;
+	margin-bottom:10px;
 	width:150px;
 }
 #menu_toggle, #logout_btn,
