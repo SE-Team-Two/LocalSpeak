@@ -13,6 +13,7 @@
 	border:1px solid black;
 	height:300px;
 	overflow-y:auto;
+	overflow-x:hidden;
 	resize:vertical;
 	padding:7px;
 }
