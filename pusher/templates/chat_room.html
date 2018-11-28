@@ -1,30 +1,296 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    {% if title %}
+    <title>SpeakEasy - {{ title }}</title>
+    {% else %}
+    <title>SpeakEasy - Chat</title>
+    {% endif %}
+    <title></title>
 
-{% block chat_room_imports %}
-<script>
-	$(document).ready( function() {
-		$("#submit_post_btn").click(function () {
-      $.post('/message/'+curr_room,
-             {'username':'{{ curr_usr }}',
-              'msg':document.getElementById("post").value});
-      document.getElementById("post").value = "";
+
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery-form/form@4.2.2/dist/jquery.form.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout_style.css') }}">
+    
+    {% block chat_room_imports %}{% endblock chat_room_imports %}
+
+    <script>
+     $(document).ready(function () {
+      SID = null;
+      curr_room = "Global";
+      pusher = new Pusher('8d8668079552b2207a73', { authEndpoint:'/authenticate',
+                                                    cluster:'us2',forceTLS:true });
+      pusher.connection.bind('connected', function() {
+        SID = pusher.connection.socket_id;
+        save_user(SID,'{{curr_usr}}',curr_room);
+        load_chat('{{ curr_usr }}',curr_room);
+      });
+      $("#name").attr({"required":"true","pattern":"[A-Za-z0-9.'&_]{1,64}",
+                       "autocomplete":"off"});
+      $("#expire").attr({"required":"true"});
+      document.getElementById("name").value= "";
+      document.getElementById("expire").value= "";
+      get_rooms();
+      function get_rooms() {
+        $.post('/get/rooms',
+                function (data) {
+                  for (i=0;i<data['data'].length;++i) {
+                    sidebar= document.getElementById("sidebar");
+                    new_room=  document.createElement('p');
+                    new_room.className= "room_item";
+                    new_name=  document.createElement('span');
+                    new_name.innerHTML= data['data'][i][1];
+                    new_name.className= "room_name";
+                    created_by=  document.createElement('span');
+                    created_by.innerHTML= 'Created By: '+data['data'][i][3];
+                    created_by.className= "room_creator";
+                    br=  document.createElement('br');
+                    if (sidebar.scrollTop+sidebar.clientHeight+10 >= sidebar.scrollHeight) {
+                      sidebar.appendChild(new_room);
+                      new_room.appendChild(new_name); 
+                      new_room.appendChild(br);
+                      new_room.appendChild(created_by);
+                      sidebar.scrollTop = sidebar.scrollHeight;
+                    }
+                    else {
+                      sidebar.appendChild(new_room);
+                      new_room.appendChild(new_name); 
+                      new_room.appendChild(br);
+                      new_room.appendChild(created_by);
+                    }
+                    new_room.onclick = function () {
+                      pusher.unsubscribe(mk_room(curr_room));
+                      curr_room= this.firstChild.innerHTML;
+                      load_chat('{{ curr_usr }}',curr_room);
+                    };
+                  }
+                }
+        );
+      }
+      function save_user(SID,username) {
+        $.post('/save',{'SID':SID,'username':username});
+      }
+      function mk_room(room) {
+        return 'presence-'+room;
+      }
+      function load_chat(user,room) {
+        user_count = 0;
+        document.getElementById('current_room').innerHTML = room;
+        document.getElementById("post").value = "";
+        messages= document.getElementById('msg_list');
+        if (messages.children.length >= 1) {
+          while (messages.firstChild) {
+            messages.removeChild(messages.firstChild);
+          }
+        }
+        users= document.getElementById('user_list');
+        if (users.children.length >= 1) {
+          while (users.firstChild) {
+            users.removeChild(users.firstChild);
+          }
+        }
+        channel = pusher.subscribe(mk_room(room));
+        channel.bind('pusher:subscription_succeeded',
+                      function(members) {
+                        user_count = members.count
+                        document.getElementById('user_count').innerHTML= user_count;
+                        members.each(function (member) {
+                          user_list= document.getElementById('user_list');
+                          user_tag= document.createElement('p');
+                          user_tag.innerHTML= member.id;
+                          user_tag.className= 'username';
+                          user_list.appendChild(user_tag);
+                          if (member.id == user)
+                            user_tag.className= 'username_b';
+                        });
+        });
+        channel.bind('new_room',
+                      function(data) {
+                        sidebar= document.getElementById("sidebar");
+                        new_room=  document.createElement('p');
+                        new_room.className= "room_item";
+                        new_name=  document.createElement('span');
+                        new_name.innerHTML= data.room;
+                        new_name.className= "room_name";
+                        created_by=  document.createElement('span');
+                        created_by.innerHTML= 'Created By: '+data.username;
+                        created_by.className= "room_creator";
+                        br=  document.createElement('br');
+                        if (sidebar.scrollTop+sidebar.clientHeight+10 >= sidebar.scrollHeight) {
+                          sidebar.appendChild(new_room);
+                          new_room.appendChild(new_name); 
+                          new_room.appendChild(br);
+                          new_room.appendChild(created_by);
+                          sidebar.scrollTop = sidebar.scrollHeight;
+                        }
+                        else {
+                          sidebar.appendChild(new_room);
+                          new_room.appendChild(new_name); 
+                          new_room.appendChild(br);
+                          new_room.appendChild(created_by);
+                        }
+                        new_room.onclick = function () {
+                          pusher.unsubscribe(mk_room(curr_room));
+                          curr_room= this.firstChild.innerHTML;
+                          load_chat('{{ curr_usr }}',curr_room);
+                        };
+        });
+        channel.bind('pusher:member_added',
+                      function(member) {
+                        ++user_count;
+                        document.getElementById('user_count').innerHTML= user_count;
+                        user_list= document.getElementById('user_list');
+                        user_tag= document.createElement('p');
+                        user_tag.innerHTML= member.id;
+                        user_tag.className= 'username';
+                        user_list.appendChild(user_tag);
+        });
+        channel.bind('pusher:member_removed',
+                      function(member) {
+                        --user_count;
+                        document.getElementById('user_count').innerHTML= user_count;
+                        user_list= document.getElementById('user_list');
+                        users= user_list.children;
+                        for (i=0;i<users.length;++i) {
+                          if (users[i].innerHTML == member.id)
+                            user_list.removeChild(users[i]);
+                        }
+        });
+        channel.bind('message',
+                      function(data) {
+                        msg=  document.createElement('p');
+                        msg.innerHTML= data.msg;
+                        msg.className= "message_left";
+                        msg_user=  document.createElement('p');
+                        msg_user.innerHTML= '- '+data.username;
+                        msg_user.className= "message_user";
+                        hr= document.createElement('hr');
+                        if (messages.scrollTop+messages.clientHeight+10 >= messages.scrollHeight) {
+                          messages.appendChild(msg);
+                          messages.appendChild(msg_user); 
+                          messages.appendChild(hr);
+                          messages.scrollTop = messages.scrollHeight;
+                        }
+                        else {
+                          messages.appendChild(msg);
+                          messages.appendChild(msg_user); 
+                          messages.appendChild(hr);
+                        }
+                        if (user == data.username)
+                            msg.className= "message_right";
+        });
+        $.post('/get/messages/'+room,
+                function (data) { 
+                  for (i=data['data'].length-1;i>=0;--i) {
+                    msg=  document.createElement('p');
+                    msg.innerHTML= data['data'][i][3];
+                    msg.className= "message_left";
+                    msg_user=  document.createElement('p');
+                    msg_user.innerHTML= '- '+data['data'][i][1];
+                    msg_user.className= "message_user";
+                    hr= document.createElement('hr');
+                    messages.appendChild(msg);
+                    messages.appendChild(msg_user);
+                    messages.appendChild(hr);
+                    if (user == data['data'][i][1])
+                      msg.className= "message_right";
+                    messages.scrollTop = messages.scrollHeight;
+                    $("#post").focus();
+                  }
+                }
+        );          
+      }
+      $("#settings_btn").click( function () {
+        window.location.href= "{{ url_for('settings',username="") }}"+"{{curr_usr}}";
+      });
+      $("#logout_btn").click( function () {
+        window.location.href= "{{ url_for('logout') }}";
+      });
+      $("#global_btn").click( function () {
+        pusher.unsubscribe(mk_room(curr_room));
+        curr_room= 'Global';
+        load_chat('{{ curr_usr }}','Global');
+      });
+      $("#create_room_btn").click( function () {
+        $("#background_div").css({"display":"block"});
+        $("#name").focus();
+      });
+      $("#submit_room_btn").click( function () {
+        if ($("#create_room_form")[0].checkValidity()) {
+          $("#background_div").css({"display":"none"});
+          $.post('/create/'+document.getElementById("name").value,
+                  {name:document.getElementById("name").value,username:"{{ curr_usr }}",
+                   time:document.getElementById("expire").value}
+          );
+          document.getElementById("name").value= "";
+          document.getElementById("expire").value= "";
+        }
+      });
+      $("#close_btn").click( function () {
+        $("#background_div").css({"display":"none"});
+        document.getElementById("name").value= "";
+        document.getElementById("expire").value= "";
+      });
+      $("#menu_toggle").click( function () {
+        if ($("#sidebar").width() == 250) {
+          $("#sidebar").css({"width":"0px"});
+          $("#main").css({"margin-left":"0px"});
+        }
+        if ($("#sidebar").width() == 0) {
+          $("#sidebar").css({"width":"250px"});
+          $("#main").css({"margin-left":"250px"});
+        } 
+      });
     });
-	});
-</script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/chat_room.css') }}">
-{% endblock chat_room_imports %}
+  </script>
 
-{% block chat_room %}
-<div id="chat_div">
-	<h1 id="current_room"></h1>
-	<div id="total_users_div">
-		<span>Total Users: </span><span id="user_count"></span>		
-	</div>
-	<div id="msg_list">
-	</div>
-	<textarea id="post" name="post" rows="2"></textarea>
-	<button type="button" id="submit_post_btn">Send</button>
+  </head>
+  <body>
+    
+    <div id="navbar">
+      <span id="current_user">{{ curr_usr }}</span>
+      <button type="button" id="logout_btn">Logout</button>
+      <button type="button" id="create_room_btn">Create Room</button>
+      <button type="button" id="settings_btn">Settings</button>
+      <button type="button" id="menu_toggle">Hide Rooms</button>
+      <button type="button" id="global_btn">Global Chat</button>
+    </div>
+    
+    <div id="sidebar">
+      <p id="menu_header"> Rooms In Your Area </p>
+      
+    </div>
+    
+    <div id="main">
+      {% block chat_room %}{% endblock chat_room %}
+    </div>
+
+    <div id="background_div">
+      <div id="create_room_div">
+        <span id="close_btn">&times;</span> <br>
+        <form id="create_room_form">
+          <label>Room Name:</label>
+          <input type="text" id="name" name="name"> <br>
+          <label>Expire:</label>
+          <select id="expire" name="expire">
+            <option value="1">1 Hour</option>
+            <option value="2">2 Hours</option>
+            <option value="3">3 Hours</option>
+            <option value="6">6 Hours</option>
+            <option value="12">12 Hours</option>
+            <option value="24">24 Hours</option>
+          </select> <br>
+          <div style="text-align:center;">
+            <button type="button" id="submit_room_btn">Create Room</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
 </div>
-<div id="user_list">
-</div>
-{% endblock chat_room %}
+  </body>
+</html>
