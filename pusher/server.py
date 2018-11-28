@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, session, request, redirect, j
 from flask_session import Session;
 from flask_mysqldb import MySQL
 from pusher import Pusher;
+from datetime import datetime, timedelta
 import json
 
 app = Flask(__name__);
@@ -17,8 +18,8 @@ mysql = MySQL(app)
 
 pusher = Pusher(
   app_id='655434',
-  key='da7281b2ef6e49a7428b',
-  secret='60e10372b2a2c9c22519',
+  key = "8d8668079552b2207a73",
+  secret = "6a78990c43960ac1fec2",
   cluster='us2',
   ssl=True
 );
@@ -63,6 +64,21 @@ def message(room):
 	else:
 		return jsonify(username=username,msg='Message Failed!')
 
+@app.route("/create/<room>",methods=['POST'])
+def create(room):
+	username = request.form['username']
+	if 'username' in session and session['username'] == username:
+		channels = pusher.channels_info()
+		pusher.trigger(channels['channels'].keys(),'new_room',{'room':room,'username':username})
+		name = request.form['name']
+		delta = request.form['time']
+		time = datetime.now() + timedelta(hours=int(delta))
+		query= "INSERT INTO rooms VALUES (default,'"+name+"','"+str(time)+"','"+username+"');"
+		cursor = mysql.connection.cursor()
+		cursor.execute(query)
+		mysql.connection.commit();
+		return jsonify(msg='Success!')
+
 @app.route("/save",methods=['POST'])
 def save():
 	session['username'] = request.form['username']
@@ -72,15 +88,21 @@ def save():
 @app.route("/authenticate",methods=['POST'])
 def authenticate():
   auth = pusher.authenticate( channel=request.form['channel_name'],
-  														socket_id=request.form['socket_id'],
-  														custom_data= {'user_id':session['username']})
+			     socket_id=request.form['socket_id'],custom_data= {'user_id':session['username']})
   return json.dumps(auth)
 
+@app.route("/get/<request>",methods=['POST'])
 @app.route("/get/<request>/<room>",methods=['POST'])
-def get(request,room):
+def get(request,room=None):
 	if request == "messages":
 		cursor = mysql.connection.cursor()
-		query = "SELECT * FROM messages WHERE room ='" + room +"' ORDER BY time DESC LIMIT 10;"
+		query = "SELECT * FROM messages WHERE room ='" + room +"' ORDER BY time DESC LIMIT 50;"
+		cursor.execute(query)
+		data = cursor.fetchall()
+		return jsonify(data=data)
+	elif request == "rooms":
+		cursor = mysql.connection.cursor()
+		query = "SELECT * FROM rooms;"
 		cursor.execute(query)
 		data = cursor.fetchall()
 		return jsonify(data=data)
