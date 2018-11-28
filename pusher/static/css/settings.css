@@ -1,0 +1,30 @@
+#settings_div {
+	margin-right:auto;
+	margin-left:auto;
+	margin-top:150px;	
+	text-align:center;
+	border:1px solid black;
+	width:50%;
+	height:300px;
+	padding-top:50px;
+}
+#hr {
+	width:85%;
+	margin-top:20px;
+}
+.pw {
+	margin-top:25px;
+	margin-bottom:5px;
+}
+#pw_label {
+	margin-left:123px; 
+}
+button {
+	margin-top:15px;
+	color:green;
+}
+#back_btn {
+	float:left;
+	margin-left:10px;
+	color:red;
+}
