@@ -11,14 +11,27 @@ h1 {
 	margin-right:auto;
 	margin-left:auto;
 	text-align:center;
+	margin-top:100px;
 	width:600px;
 }
 #username {
-	margin-right:auto;
-	margin-left:auto;
-	margin-top:100px;
-	width:300px;
+	width:150px;
+	margin-left:30px;
+	text-align:center;
+}
+#password {
+	width:150px;
+	margin-left:36px; 
+	text-align:center;
 }
 button {
-	margin-top:3px;
+	margin-top:10px;
+	color:green;
+}
+#error_msg {
+	margin-top:10px;
+	font-size:12px;
+	font-weight:bold;
+	color:white;
+	display:none;
 }
