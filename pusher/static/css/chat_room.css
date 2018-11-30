@@ -1,0 +1,61 @@
+#total_users_div {
+	margin-left:auto;
+	margin-right:auto;
+	text-align:right;
+}
+#chat_div {
+	margin-left:5px;
+	width:80%;
+	display:inline-block;
+	float:left;
+}
+#msg_list {
+	border:1px solid black;
+	height:300px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	resize:vertical;
+	padding:7px;
+}
+#post {
+	width:100%;
+	resize:none;
+	font-size:18px;
+} 
+#submit_post_btn {
+	float:right;
+	width:100px;
+	color:green;
+}
+#user_list {
+	padding-top:50px;
+	margin-left:5px;
+	width:20%;
+	height:100%;
+	position:fixed;
+	border-left:1px solid black;
+	border-collapse:collapse;
+	display:inline-block;
+	float:left;
+}
+.username {
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	width:100%;
+	border-collapse:collapse;
+	text-align:center;
+}
+.username_b {
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	width:100%;
+	border-collapse:collapse;
+	text-align:center;
+	font-weight:bold;
+}
+.username:hover, .username_b:hover {
+	color:white;
+	background-color:grey;
+	cursor:pointer;
+	transition:.3s;
+}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block chat_room_imports %}
+<script>
+	$(document).ready( function() {
+		$("#submit_post_btn").click(function () {
+			if (document.getElementById("post").value != "") {
+      	$.post('/message/'+curr_room,
+        	     {'username':'{{ curr_usr }}',
+          	    'msg':document.getElementById("post").value});
+      	document.getElementById("post").value = "";
+	    }
+      document.getElementById("post").focus();
+    });
+    $("#post").attr({"rows":2,"maxlength":256});
+    $('#post').keydown(function(event) {
+    	if (event.keyCode == 13) {
+        $("#submit_post_btn").click();
+        return false;
+      }
+    });
+	});
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chat_room.css') }}">
+{% endblock chat_room_imports %}
+
+{% block chat_room %}
+<div id="chat_div">
+	<h1 id="current_room"></h1>
+	<div id="total_users_div">
+		<span>Total Users: </span><span id="user_count"></span>		
+	</div>
+	<div id="msg_list">
+	</div>
+	<textarea id="post" name="post"></textarea>
+	<button type="button" id="submit_post_btn">Send</button>
+</div>
+<div id="user_list">
+</div>
+{% endblock chat_room %}

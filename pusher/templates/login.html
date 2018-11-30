@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SpeakEasy - Login</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_style.css') }}">
+
+    <script>
+    	$(document).ready( function() {
+    		$("#username").attr({'autocomplete':'off'});
+    	});
+    </script>
+
+	</head>
+	<body>
+		<h1>SpeakEasy</h1>
+		<div id="login_div">
+			<form id="login_form" method="POST" action="{{ url_for('login') }}">
+				<input type="text" id="username" name="username"> <br>
+				<button type="submit">Login</button>
+			</form>
+		</div>
+	</body>
+</html>
