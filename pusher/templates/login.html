@@ -8,7 +8,14 @@
 
     <script>
     	$(document).ready( function() {
-    		$("#username").attr({'autocomplete':'off'});
+    		$("#username").attr({'autocomplete':'off',"required":"true"});
+    		document.getElementById("username").value= "";
+    		$("#password").attr({'autocomplete':'off',"required":"true"});
+    		document.getElementById("password").value= "";
+    		error = parseInt('{{error}}');
+    		if (error) {
+    			$("#error_msg").css({'display':'block'})
+    		}
     	});
     </script>
 
@@ -17,8 +24,14 @@
 		<h1>SpeakEasy</h1>
 		<div id="login_div">
 			<form id="login_form" method="POST" action="{{ url_for('login') }}">
-				<input type="text" id="username" name="username"> <br>
+				<div>
+					<label>Username:</label><input type="text" id="username" name="username">
+				</div>
+				<div>
+					<label>Password:</label><input type="password" id="password" name="password">
+				</div>
 				<button type="submit">Login</button>
+				<span id="error_msg">Username and password do not match!</span>
 			</form>
 		</div>
 	</body>
