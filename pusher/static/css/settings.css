@@ -1,30 +1,46 @@
+body{
+	background-color: #52565C;
+	font-family: "Limelight";
+}
 #settings_div {
 	margin-right:auto;
 	margin-left:auto;
-	margin-top:150px;	
+	margin-top:20vh;	
 	text-align:center;
+	width:50vw;
+	height:25vh;
+}
+#user_settings{
+	padding-top:5vh;
+	padding-bottom: 5vh;
 	border:1px solid black;
-	width:50%;
-	height:300px;
-	padding-top:50px;
 }
 #hr {
 	width:85%;
-	margin-top:20px;
+	margin-top:2vh;
 }
 .pw {
-	margin-top:25px;
-	margin-bottom:5px;
+	margin-top:2vh;
+	margin-bottom:1vh;
 }
 #pw_label {
-	margin-left:123px; 
+	margin-left:10vw; 
 }
 button {
-	margin-top:15px;
-	color:green;
+	margin-top:1vh;
+	color:white;
+	background-color: #353739;
+	/*font-family: "Limelight";*/
+}
+button:hover {
+	color:black;
+	background-color:white;
+	border:2px solid #353739;
+	transition:.5s;
+	cursor:pointer;
 }
 #back_btn {
 	float:left;
-	margin-left:10px;
+	/*margin-left:1vw;*/
 	color:red;
 }

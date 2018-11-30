@@ -4,49 +4,73 @@
 	text-align:right;
 }
 #chat_div {
-	margin-left:5px;
-	width:80%;
+	margin-left:0px; /*px for js func*/
+	width:70vw; /*px for js func*/
 	display:inline-block;
 	float:left;
 }
 #msg_list {
 	border:1px solid black;
-	height:300px;
+	height:45vh;
 	overflow-y:auto;
 	overflow-x:hidden;
 	resize:vertical;
-	padding:7px;
+	padding:1vh;
 }
 #post {
-	width:100%;
+	width:99%;
 	resize:none;
-	font-size:18px;
+	font-size:1vw;
 } 
 #submit_post_btn {
 	float:right;
-	width:100px;
-	color:green;
+	width:5vw;
+	/*color:green;*/
+}
+/*
+#separationLine{
+	float: left;
+	width: 0vw;
+	height: 50vh;
+	margin-top: 25vh;
+	border: 0.5px solid black;
+}
+*/
+button {
+	margin-top:1vh;
+	color:white;
+	background-color: #353739;
+	font-size: 18px;
+	/*font-family: "Limelight";*/
+}
+button:hover {
+	color:black;
+	background-color:white;
+	border:2px solid #353739;
+	transition:.5s;
+	cursor:pointer;
 }
 #user_list {
-	padding-top:50px;
-	margin-left:5px;
-	width:20%;
+	padding-top:1vh;
+	margin-left:6px;
+	width:15vw;
 	height:100%;
 	position:fixed;
 	border-left:1px solid black;
 	border-collapse:collapse;
 	display:inline-block;
 	float:left;
+	transition: width .5s;
 }
 .username {
-	border-top:1px solid black;
+	/*border-top:1px solid black;*/
 	border-bottom:1px solid black;
-	width:100%;
+	width:100vw;
 	border-collapse:collapse;
 	text-align:center;
 }
 .username_b {
-	border-top:1px solid black;
+	/*border-top:1px solid black;*/
 	border-bottom:1px solid black;
 	width:100%;
 	border-collapse:collapse;

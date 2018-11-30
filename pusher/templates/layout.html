@@ -15,7 +15,8 @@
     <script src="https://cdn.jsdelivr.net/gh/jquery-form/form@4.2.2/dist/jquery.form.min.js"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout_style.css') }}">
-    
+    <link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Limelight" />
     {% block chat_room_imports %}{% endblock chat_room_imports %}
 
     <script>
@@ -249,20 +250,42 @@
         if ($("#sidebar").width() == 250) {
           $("#sidebar").css({"width":"0px"});
           $("#main").css({"margin-left":"0px"});
+		  $("#user_list").css({"margin-left":"250px"});
         }
         if ($("#sidebar").width() == 0) {
           $("#sidebar").css({"width":"250px"});
           $("#main").css({"margin-left":"250px"});
+		  $("#user_list").css({"margin-left":"6px"});
         } 
       });
     });
+	
+	window.onload = function greeting(){
+		var randNum = (Math.floor(Math.random() * Math.floor(9)));
+		var greeting = "";
+		switch(randNum){
+			case 0: greeting = "Welcome back, "; break;
+			case 1: greeting = "Good to see you, "; break;
+			case 2: greeting = "How have you been, "; break;
+			case 3: greeting = "What's new, "; break;
+			case 4: greeting = "Long time no see, "; break;
+			case 5: greeting = "How do you do, "; break;
+			case 6: greeting = "Greetings, "; break;
+			case 7: greeting = "Welcome to the show, "; break;
+			case 8: greeting = "What's the haps, "; break;
+			case 9: greeting = "Speak to me, "; break;
+		}
+		document.getElementById("current_user").innerHTML = greeting + " " +  "{{ curr_usr }}";
+	}
   </script>
 
   </head>
   <body>
-    
+    <!-- <div id="logo_01">
+		<img src="../static/Images/speak_easy_logo_01.jpg" width="256" height="256"/>
+	</div> -->
     <div id="navbar">
-      <span id="current_user">{{ curr_usr }}</span>
+      <span id="current_user"></span>
       <button type="button" id="logout_btn">Logout</button>
       <button type="button" id="create_room_btn">Create Room</button>
       <button type="button" id="settings_btn">Settings</button>

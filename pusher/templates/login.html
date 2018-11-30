@@ -5,7 +5,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_style.css') }}">
-
+	<link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Limelight" />
+	
     <script>
     	$(document).ready( function() {
     		$("#username").attr({'autocomplete':'off'});
@@ -14,11 +16,14 @@
 
 	</head>
 	<body>
-		<h1>SpeakEasy</h1>
+		<!-- <h1>SpeakEasy</h1> -->
+		<div id="logo_02">
+			<img src="../static/Images/speak_easy_logo_02.jpg" width="768" height="256"/>
+		</div>
 		<div id="login_div">
 			<form id="login_form" method="POST" action="{{ url_for('login') }}">
-				<input type="text" id="username" name="username"> <br>
-				<button type="submit">Login</button>
+				<input placeholder="Username" type="text" id="username" name="username"> <br>
+				<button type="submit">Start Chatting</button>
 			</form>
 		</div>
 	</body>
