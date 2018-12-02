@@ -142,10 +142,10 @@ def get(call,room=None):
 			cursor.execute(query)
 			response = cursor.fetchall()
 			data = list()
-			u_position = (session['lat'],session['long'])
+			u_position = (request.form['lat'],request.form['long'])
 			for room in response:
 				r_position = (room[4],room[5])
-				if distance.distance(r_position,u_position).miles <= session['distance']:
+				if distance.distance(r_position,u_position).miles <= int(session['distance']):
 					data.append(room);
 			return jsonify(data=data)
 		elif call == "distance":
