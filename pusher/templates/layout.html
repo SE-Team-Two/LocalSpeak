@@ -85,7 +85,8 @@
           position['lat']= pos.coords.latitude;
           position['long']= pos.coords.longitude;
           save_user('{{curr_usr}}',position);
-          $.post('/get/rooms', {'username':'{{ curr_usr }}'},
+          $.post('/get/rooms', { 'username':'{{ curr_usr }}',
+                                 'lat':position['lat'],'long':position['long'] },
             function (data) {
               sidebar= document.getElementById("sidebar");
               while (sidebar.children.length > 1) {
@@ -118,6 +119,7 @@
                   pusher.unsubscribe(mk_room(curr_room));
                   curr_room= this.firstChild.innerHTML;
                   load_chat('{{ curr_usr }}',curr_room);
+                  $("#post").focus();
                 };
               }
             }
