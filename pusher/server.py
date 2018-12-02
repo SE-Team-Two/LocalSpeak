@@ -53,7 +53,7 @@ def chat(username):
 	else:
 		return render_template("login.html");
 
-@app.route("/settings/<username>")
+@app.route("/settings/<username>",methods=["POST","GET"])
 def settings(username):
 	if 'username' in session and session['username'] == username:
 		return render_template("settings.html",curr_usr=username);
@@ -114,6 +114,13 @@ def save(call):
 		session['distance'] = request.form['distance']
 		query = "UPDATE users SET distance = "+request.form['distance']+" WHERE username = '"+request.form['username']+"';"
 		cursor = mysql.connection.cursor()
+		cursor.execute(query)
+		mysql.connection.commit();
+		return jsonify(msg='Success!')
+	if call == "password":
+		password = request.form['password'];
+		cursor = mysql.connection.cursor()
+		query = "UPDATE users SET password = '"+password+"' WHERE username = '"+request.form['username']+"';"
 		cursor.execute(query)
 		mysql.connection.commit();
 		return jsonify(msg='Success!')
