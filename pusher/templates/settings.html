@@ -15,8 +15,8 @@
   				$("#distance").change();
   			}
 			);
-			$("#pw").attr({"required":"true",'minlength':8});
-			$("#v_pw").attr({"required":"true",'minlength':8});
+			$("#pw").attr({"required":"true",'minlength':8,'maxlength':32});
+			$("#v_pw").attr({"required":"true",'minlength':8,'maxlength':32});
   		$("#distance").change(function () {
   			label= document.getElementById('distance_label');
   			distance= document.getElementById('distance');
