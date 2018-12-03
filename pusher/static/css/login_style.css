@@ -15,17 +15,19 @@ h1 {
 	width:600px;
 }
 #username {
-	width:150px;
+	width:125px;
 	margin-left:30px;
-	text-align:center;
+	padding-left:7px;
+  letter-spacing:1px;
 }
 #password {
-	width:150px;
+	width:125px;
 	margin-left:36px; 
-	text-align:center;
+	padding-left:7px;
+  letter-spacing:3px;
 }
 button {
-	margin-top:10px;
+	margin-top:15px;
 	color:green;
 }
 #error_msg {
@@ -33,5 +35,82 @@ button {
 	font-size:12px;
 	font-weight:bold;
 	color:white;
+	display:none;
+}
+#create_acnt_btn {
+	margin-top:70px;
+	margin-left:auto;
+	margin-right:auto;
+	font-size:12px;
+	color:white;
+	display:block;
+	text-align:center;
+	width:100px;
+}
+#create_acnt_btn:hover {
+	cursor:pointer;
+	color:blue;
+}
+#background_div {
+	display:none;
+  position:fixed;
+  z-index:1; 
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  overflow:auto;
+  background-color:rgba(0,0,0,0.4); 
+}
+#create_account_div {
+	background-color:#fefefe;
+  margin:10% auto;
+  padding:20px;
+  border:1px solid #888;
+  width:40%; 
+}
+#create_account_form {
+	margin:3% auto;
+	width:80%; 
+}
+#name,#pw,#v_pw {
+	width:180px;
+	margin-left:2%;
+	margin-bottom:10px;
+	float:right;
+	padding-left:7px;
+  letter-spacing:1px;
+}
+#pw,#v_pw {
+padding-left:7px;
+letter-spacing:3px;
+}
+#close_btn {
+	color:#aaa;
+  float:right;
+  font-size:28px;
+  font-weight:bold;
+}
+#close_btn:hover, #close_btn:focus {
+  color:black;
+  cursor:pointer;
+}
+.required {
+	color:red;
+	font-size:12px;
+	float:right;
+}
+#submit_acnt_btn {
+	color:green;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:10px;
+	width:150px;
+}
+.account_error {
+	margin-left:auto;
+	margin-right:auto;
+	font-size:12px;
+	color:red;
 	display:none;
 }
