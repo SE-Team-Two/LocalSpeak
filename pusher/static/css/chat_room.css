@@ -18,9 +18,11 @@
 	padding:7px;
 }
 #post {
-	width:100%;
+	width:99%;
 	resize:none;
 	font-size:18px;
+	padding-left:7px;
+  letter-spacing:1px;
 } 
 #submit_post_btn {
 	float:right;
