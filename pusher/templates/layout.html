@@ -71,7 +71,7 @@
       document.getElementById("name").value= "";
       document.getElementById("expire").value= "1";
       $("#expire").attr({"required":"true"});
-      $("#name").attr({"required":"true","pattern":"[A-Za-z0-9.&_=@,]{1,64}",
+      $("#name").attr({"required":"true","pattern":"[A-Za-z0-9.&_=@,]{1,32}",
                        "autocomplete":"off"});
       $("#name").keydown(function (event) {
         if (event.keyCode == 32) {
@@ -252,7 +252,7 @@
         if ($("#create_room_form")[0].checkValidity()) {
           $("#background_div").css({"display":"none"});
           $(".room_error").css({'display':'none'});
-          $.post('/create/'+document.getElementById("name").value,
+          $.post('/create/room',
                   {name:document.getElementById("name").value,username:"{{ curr_usr }}",
                    time:document.getElementById("expire").value}
           );
