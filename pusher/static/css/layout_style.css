@@ -115,6 +115,8 @@ h1 {
 	margin-left:2%;
 	margin-bottom:10px;
 	float:right;
+	padding-left:7px;
+  letter-spacing:1px;
 }
 #expire {
 	width:150px;
