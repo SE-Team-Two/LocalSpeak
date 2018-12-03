@@ -15,9 +15,12 @@
 .pw {
 	margin-top:25px;
 	margin-bottom:5px;
+	padding-left:7px;
+  letter-spacing:3px;
+  width:150px;
 }
 #pw_label {
-	margin-left:123px; 
+	margin-left:40px; 
 }
 button {
 	margin-top:15px;
