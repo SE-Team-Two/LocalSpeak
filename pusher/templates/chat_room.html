@@ -22,13 +22,14 @@
 	});
 </script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/chat_room.css') }}">
+<link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
 {% endblock chat_room_imports %}
 
 {% block chat_room %}
 <div id="chat_div">
 	<h1 id="current_room"></h1>
 	<div id="total_users_div">
-		<span>Total Users: </span><span id="user_count"></span>		
+		<span>Nearby User Count: </span><span id="user_count"></span>		
 	</div>
 	<div id="msg_list">
 	</div>

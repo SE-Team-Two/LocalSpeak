@@ -5,7 +5,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_style.css') }}">
-
+	<link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
+	
     <script>
     	$(document).ready( function() {
     		$("#username").attr({'autocomplete':'off',"required":"true"});
@@ -96,7 +97,9 @@
 
 	</head>
 	<body>
-		<h1>SpeakEasy</h1>
+		<div id="logo_02">
+			<img src="../static/Images/speak_easy_logo_02.jpg" width="768" height="256"/>
+		</div>
 		<div id="login_div">
 			<form id="login_form" method="POST" action="{{ url_for('login') }}">
 				<div>
