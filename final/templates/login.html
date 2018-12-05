@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SpeakEasy - Login</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_style.css') }}">
+		<link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
+		<link href="https://fonts.googleapis.com/css?family=Yesteryear" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave|Yesteryear" rel="stylesheet"> 
+
+    <script>
+    	$(document).ready( function() {
+    		$("#username").attr({'autocomplete':'off',"required":"true"});
+				$("#username").focus();
+    		document.getElementById("username").value= "";
+    		$("#password").attr({'autocomplete':'off',"required":"true"});
+    		document.getElementById("password").value= "";
+    		error = parseInt('{{error}}');
+    		if (error) {
+    			$("#error_msg").css({'display':'block'})
+    		}
+    		$("#name").attr({'autocomplete':'off',"required":"true",'minlength':3,'maxlength':32});
+    		$("#name").keydown(function (event) {
+        if (event.keyCode == 32) {
+	          this.value= this.value+'_';
+	          return false;
+	        }
+	      });
+    		document.getElementById("name").value= "";
+    		$("#pw").attr({"required":"true",'minlength':8,'maxlength':32});
+    		document.getElementById("pw").value= "";
+    		$("#v_pw").attr({"required":"true",'minlength':8,'maxlength':32});
+    		document.getElementById("v_pw").value= "";
+    		$("#create_acnt_btn").click( function () {
+	        $("#background_div").css({"display":"block"});
+	        $("#name").focus();
+	      });
+	      $("#close_btn").click( function () {
+	        $("#background_div").css({"display":"none"});
+	        $(".account_error").css({'display':'none'});
+	        document.getElementById("name").value= "";
+	        document.getElementById("pw").value= "";
+	        document.getElementById("v_pw").value= "";
+	      });
+	      $("#submit_acnt_btn").click(function () {
+	  			$("#password_error_length").css({"display":"none"});
+		  		$("#password_error_match").css({"display":"none"});
+		  		$("#username_error_length").css({"display":"none"});
+		  		$("#username_error_match").css({"display":"none"});
+	  			if (!(document.getElementById("name").checkValidity())) {
+		  			$("#username_error_length").css({"display":"block"});
+					}
+					if (!(document.getElementById("pw").checkValidity())) {
+		  			$("#password_error_length").css({"display":"block"});
+					}
+	  			if ($("#create_account_form")[0].checkValidity()) {
+		  			pw= document.getElementById("pw").value;
+		  			v_pw= document.getElementById("v_pw").value;
+		  			name= document.getElementById("name").value;
+		  			if (pw == v_pw) {
+		  				if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                	function (pos) {
+		  							$.post('/create/user', {'username':name,"password":pw,
+								   	 	'lat':pos.coords.latitude,'long':pos.coords.longitude},
+  								   		function (data) {
+  								   	 		if (data.msg == 'fail') {
+	  												$("#username_error_match").css({"display":"block"});
+	  												document.getElementById("name").value= "";
+	  												document.getElementById("pw").value= "";
+	  												document.getElementById("v_pw").value= "";
+	  												$("#name").focus();
+													}
+	  								   	 	else {
+	  								   	 		alert("Success!");
+						  							alert("Logging in..");
+						  							window.location.href= "{{url_for('chat',username="")}}"+name;
+	  								   	 	}
+	  								   	}
+	  								);
+            			}
+            		);
+              }
+        			else {
+          			alert("Not Supported");
+      				}
+		  			}
+		  			else {
+		  				$("#password_error_match").css({"display":"block"});
+		  				document.getElementById("pw").value= "";
+		  				document.getElementById("v_pw").value= "";
+	  					$("#pw").focus();
+						}
+					}
+	  		});
+    	});
+    </script>
+
+	</head>
+	<body>
+		<!-- <h1>SpeakEasy</h1> -->
+		<div id="logo_02">
+			<img src="../static/Images/speak_easy_logo_02.jpg" width="768" height="256"/>
+		</div>
+		<div id="login_div">
+			<form id="login_form" method="POST" action="{{ url_for('login') }}">
+				<div>
+					<label style="font-size:35px;">Username:</label><input type="text" id="username" name="username">
+				</div>
+				<div>
+					<label style="font-size:35px;">Password:</label><input type="password" id="password" name="password">
+				</div>
+				<button type="submit">Login</button>
+				<span id="error_msg">Username and password do not match!</span>
+			</form>
+		</div>
+		<span id="create_acnt_btn">Create Account</span>
+		<div id="background_div">
+      <div id="create_account_div">
+        <span id="close_btn">&times;</span> <br>
+        <form id="create_account_form" onsubmit="return false;">
+          <div style="margin:auto;height:70px;width:320px;">
+
+            <label class="create_account_label">Username:</label> 
+            <input type="text" id="name" name="name">
+            <span class="required">*</span><br><br>
+            <label class="create_account_label"">Password:</label>
+            <input type="password" id="pw" name="pw">
+            <span class="required">*</span><br><br>
+            <label class="create_account_label">Verify:</label>
+            <input type="password" id="v_pw" name="v_pw">
+            <span class="required">*</span><br><br>
+          </div> <br><br>
+          <div style="text-align:center;"><br>
+            <button type="button" id="submit_acnt_btn">Create Account</button>
+          </div>
+          <div style="text-align:center;">
+            <span class="account_error" id="username_error_match">Username already exists!</span>
+            <span class="account_error" id="username_error_length">Username not valid! 3-32 characters.</span>
+            <span class="account_error" id="password_error_match">Passwords do not match!</span>
+            <span class="account_error" id="password_error_length">Password not valid! 8-32 characters.</span>
+            
+        </form>
+      </div>
+    </div>
+
+	</body>
+</html>
