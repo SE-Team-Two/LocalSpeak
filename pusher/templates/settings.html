@@ -11,7 +11,14 @@
 
   <script>
   	$(document).ready( function () {
-  		$("#distance").attr({'min':1,'max':50,'value':25});
+  		$.post('/get/distance', {'username':'{{ curr_usr }}'},
+				function (data) {
+  				$("#distance").attr({'min':1,'max':50,'value':data['data'][0]});
+  				$("#distance").change();
+  			}
+			);
+			$("#pw").attr({"required":"true",'minlength':8,'maxlength':32});
+			$("#v_pw").attr({"required":"true",'minlength':8,'maxlength':32});
   		$("#distance").change(function () {
   			label= document.getElementById('distance_label');
   			distance= document.getElementById('distance');
@@ -20,32 +27,61 @@
   		$("#back_btn").click(function () {
   			window.location.href= "{{ url_for('chat',username="") }}"+"{{curr_usr}}";
   		});
+  		$("#set_distance_btn").click(function () {
+  			$("#distance_success").css({"display":"none"});
+  			value= document.getElementById("distance").value;
+  			$.post('/save/distance', {'username':'{{ curr_usr }}',"distance":value});
+  			$("#distance_success").css({"display":"block"});
+  		});
+  		$("#update_pw_btn").click(function () {
+  			$("#password_error_length").css({"display":"none"});
+	  		$("#password_error_match").css({"display":"none"});
+  			$("#password_success").css({"display":"none"});
+  			if ($("#update_pw_form")[0].checkValidity()) {
+	  			pw= document.getElementById("pw").value;
+	  			v_pw= document.getElementById("v_pw").value;
+	  			if (pw == v_pw) {
+	  				$.post('/save/password', {'username':'{{ curr_usr }}',"password":pw});
+	  				$("#password_success").css({"display":"block"});
+	  			}
+	  			else
+	  				$("#password_error_match").css({"display":"block"});
+	  				document.getElementById("pw").value= ""
+	  				document.getElementById("v_pw").value= ""
+				}
+				else {
+					$("#password_error_length").css({"display":"block"});
+				}
+  		});
   	});
   </script>
 </head>
 <body>
 	<div id="settings_div">
 
-		<form id="user_settings">
-			
-			<label id="distance_label">25 mi.</label>
+		<label id="distance_label"></label>
+		<br>
+		<input id="distance" name="distance" type="range">
+		<br>
+		<label>Distance</label>
+		<br>
+		<button type="button" id="set_distance_btn">Set</button>
+    <span class="settings_success" id="distance_success">Success!</span>
+		<hr id='hr'>
+		<form id="update_pw_form">
+			<input class="pw" name="pw" id="pw" type="password">
+			<input class="pw" name="v_pw" id="v_pw" type="password">
 			<br>
-			<input id="distance" name="distance" type="range">
+			<label>New Password</label>
+			<label id='pw_label'>Verify Password</label>
 			<br>
-			<label>Distance</label>
-			<br>
-			<button type="button">Set</button>
-			<hr id='hr'>
-			<input class="pw" name="old_pw" type="text">
-			<input class="pw" name="new_pw" type="text">
-			<br>
-			<label>Old Password</label>
-			<label id='pw_label'>New Password</label>
-			<br>
-			<button type="button">Update</button>
-
-		</form>
+			<button type="button" id="update_pw_btn">Update</button>
+      <span class="settings_success" id="password_success">Success!</span>
+      <span class="settings_error" id="password_error_match">Passwords do not match!</span>
+      <span class="settings_error" id="password_error_length">Password not valid! 8-32 characters.</span>
+    </form>
 		<button type="button" id="back_btn">Back</button>
+	
 	</div>
 </body>
 </html>
