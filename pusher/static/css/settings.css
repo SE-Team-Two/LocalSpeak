@@ -1,3 +1,7 @@
+body{
+	background-color: #52565C;
+	font-family: "Arial";
+}
 #settings_div {
 	margin-right:auto;
 	margin-left:auto;
@@ -23,9 +27,17 @@
 	margin-left:40px; 
 }
 button {
-	margin-top:15px;
-	margin-bottom:10px;
-	color:green;
+	margin-top:1vh;
+	color:white;
+	background-color: #353739;
+	/*font-family: "Limelight";*/
+}
+button:hover {
+	color:black;
+	background-color:white;
+	border:2px solid #353739;
+	transition:.5s;
+	cursor:pointer;
 }
 #back_btn {
 	float:left;

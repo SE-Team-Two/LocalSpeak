@@ -27,7 +27,21 @@
 #submit_post_btn {
 	float:right;
 	width:100px;
-	color:green;
+	/*color:green;*/
+}
+button {
+	margin-top:1vh;
+	color:white;
+	background-color: #353739;
+	font-size: 18px;
+	/*font-family: "Limelight";*/
+}
+button:hover {
+	color:black;
+	background-color:white;
+	border:2px solid #353739;
+	transition:.5s;
+	cursor:pointer;
 }
 #user_list {
 	padding-top:50px;

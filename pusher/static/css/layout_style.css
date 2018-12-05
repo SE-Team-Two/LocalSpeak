@@ -1,5 +1,9 @@
 html {
 }
+body{
+	background-color: #52565C;
+	font-family: "Arial";
+}
 h1 {
 	margin-left:auto;
 	margin-right:auto;
