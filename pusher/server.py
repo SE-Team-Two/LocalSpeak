@@ -5,7 +5,6 @@ from pusher import Pusher;
 from datetime import datetime, timedelta
 from geopy import distance
 import json
-import mysql.connector
 
 app = Flask(__name__);
 SECRET_KEY = 'secretytypeword!';
