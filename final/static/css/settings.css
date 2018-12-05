@@ -1,0 +1,60 @@
+html {
+	background-color: #4F535A;
+}
+#settings_div {
+	margin-right:auto;
+	margin-left:auto;
+	margin-top:100px;	
+	text-align:center;
+	border:2px solid black;
+	width:50%;
+	height:385px;
+	padding-top:50px;
+	background-color:rgb(230,230,230);
+}
+.settings_label {
+	font-family: 'Sedgwick Ave', cursive;
+	font-size:20px;
+}
+#hr {
+	width:85%;
+	margin-top:20px;
+}
+.pw {
+	margin-top:25px;
+	margin-bottom:5px;
+	padding-left:7px;
+  letter-spacing:3px;
+  width:150px;
+}
+#pw_label {
+	margin-left:40px; 
+}
+button {
+	margin-top:15px;
+	margin-bottom:10px;
+	color:green;
+	background-color: #353739;
+	font-size: 20px;
+	font-family: 'Yesteryear',cursive;
+	border:2px solid black;
+	width:100px;
+}
+button:hover {
+	cursor:pointer;
+}
+#back_btn {
+	float:left;
+	margin-left:10px;
+	color:red;
+}
+.settings_error {
+	font-size:12px;
+	color:red;
+	display:none;
+}
+.settings_success {
+	font-size:12px;
+	color:green;
+	display:none;
+}
