@@ -1,53 +1,41 @@
 html {
-	/*background-color:grey;*/
-}
-body{
-	background-color: #52565C;
-	font-family: "Arial";
-}
-h1 {
-	margin-right:auto;
-	margin-left:auto;
-	margin-top:100px;
-	text-align:center;
+background-color: #4F535A;
+font-family: 'Yesteryear',cursive;
+color:white;
 }
 #login_div {
 	margin-right:auto;
 	margin-left:auto;
 	text-align:center;
-	margin-top:100px;
+	margin-top:10px;
 	width:600px;
-}
-#logo_02{
-	height: 256px;
-	width: 768px;
-	margin: auto;
-	background-color: #35383C;
 }
 #username {
 	width:125px;
-	margin-left:30px;
+	margin-left:10px;
 	padding-left:7px;
   letter-spacing:1px;
 }
 #password {
 	width:125px;
-	margin-left:36px; 
+	margin-left:14px; 
 	padding-left:7px;
   letter-spacing:3px;
 }
 button {
-	margin-top:1vh;
 	color:white;
 	background-color: #353739;
-	font-size: 18px;
-	/*font-family: "Limelight";*/
+	font-size: 20px;
+	font-family: 'Yesteryear',cursive;
+	border:2px solid black;
+	width:80px;
+	margin-top:5px;
 }
 button:hover {
 	color:black;
 	background-color:white;
-	border:2px solid #353739;
-	transition:.5s;
+	border:2px solid black;
+	transition:.3s;
 	cursor:pointer;
 }
 #error_msg {
@@ -58,18 +46,17 @@ button:hover {
 	display:none;
 }
 #create_acnt_btn {
-	margin-top:70px;
+	margin-top:55px;
 	margin-left:auto;
 	margin-right:auto;
-	font-size:12px;
-	color:white;
+	font-size:20px;
 	display:block;
 	text-align:center;
-	width:100px;
+	width:120px;
 }
 #create_acnt_btn:hover {
 	cursor:pointer;
-	color:blue;
+	color:red;
 }
 #background_div {
 	display:none;
@@ -85,9 +72,10 @@ button:hover {
 #create_account_div {
 	background-color:#fefefe;
   margin:10% auto;
-  padding:20px;
-  border:1px solid #888;
-  width:40%; 
+  padding:10px;
+  border:2px solid black;
+  width:40%;
+  background-color:rgb(230,230,230);
 }
 #create_account_form {
 	margin:3% auto;
@@ -102,14 +90,20 @@ button:hover {
   letter-spacing:1px;
 }
 #pw,#v_pw {
-padding-left:7px;
-letter-spacing:3px;
+  letter-spacing:3px;
 }
 #close_btn {
 	color:#aaa;
   float:right;
-  font-size:28px;
+  font-size:40px;
   font-weight:bold;
+  transform:translateX(-20px);
+  transform:translateY(-10px);
+}
+#logo_02{
+	height:256px;
+	width:768px;
+	margin:auto;
 }
 #close_btn:hover, #close_btn:focus {
   color:black;
@@ -121,11 +115,12 @@ letter-spacing:3px;
 	float:right;
 }
 #submit_acnt_btn {
-	color:green;
+	background-color: #353739;
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:10px;
 	width:150px;
+	color:green;
 }
 .account_error {
 	margin-left:auto;
@@ -133,4 +128,11 @@ letter-spacing:3px;
 	font-size:12px;
 	color:red;
 	display:none;
+	font-family:sans-serif;
+}
+.create_account_label {
+	float:left;
+	color:black;
+	font-family: 'Sedgwick Ave', cursive;
+	font-size:20px;
 }

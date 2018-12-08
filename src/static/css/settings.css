@@ -1,16 +1,20 @@
-body{
-	background-color: #52565C;
-	font-family: "Arial";
+html {
+	background-color: #4F535A;
 }
 #settings_div {
 	margin-right:auto;
 	margin-left:auto;
-	margin-top:120px;	
+	margin-top:100px;	
 	text-align:center;
-	border:1px solid black;
+	border:2px solid black;
 	width:50%;
-	height:350px;
+	height:385px;
 	padding-top:50px;
+	background-color:rgb(230,230,230);
+}
+.settings_label {
+	font-family: 'Sedgwick Ave', cursive;
+	font-size:20px;
 }
 #hr {
 	width:85%;
@@ -27,16 +31,16 @@ body{
 	margin-left:40px; 
 }
 button {
-	margin-top:1vh;
-	color:white;
+	margin-top:15px;
+	margin-bottom:10px;
+	color:green;
 	background-color: #353739;
-	/*font-family: "Limelight";*/
+	font-size: 20px;
+	font-family: 'Yesteryear',cursive;
+	border:2px solid black;
+	width:100px;
 }
 button:hover {
-	color:black;
-	background-color:white;
-	border:2px solid #353739;
-	transition:.5s;
 	cursor:pointer;
 }
 #back_btn {

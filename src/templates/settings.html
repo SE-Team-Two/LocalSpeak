@@ -4,8 +4,9 @@
 	<title>SpeakEasy - Settings</title>
 
   <link rel="stylesheet" href="{{ url_for('static',filename='css/settings.css') }}">
-  <link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
-  
+  <link href="https://fonts.googleapis.com/css?family=Yesteryear" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave|Yesteryear" rel="stylesheet"> 
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script>
@@ -58,11 +59,11 @@
 <body>
 	<div id="settings_div">
 
-		<label id="distance_label"></label>
+		<label id="distance_label" class="settings_label"></label>
 		<br>
 		<input id="distance" name="distance" type="range">
 		<br>
-		<label>Distance</label>
+		<label class="settings_label">Distance</label>
 		<br>
 		<button type="button" id="set_distance_btn">Set</button>
     <span class="settings_success" id="distance_success">Success!</span>
@@ -71,8 +72,8 @@
 			<input class="pw" name="pw" id="pw" type="password">
 			<input class="pw" name="v_pw" id="v_pw" type="password">
 			<br>
-			<label>New Password</label>
-			<label id='pw_label'>Verify Password</label>
+			<label class="settings_label">New Password</label>
+			<label id='pw_label' class="settings_label">Verify Password</label>
 			<br>
 			<button type="button" id="update_pw_btn">Update</button>
       <span class="settings_success" id="password_success">Success!</span>

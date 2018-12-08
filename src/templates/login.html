@@ -5,8 +5,10 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_style.css') }}">
-	<link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
-	
+		<link rel="icon" href="../static/Images/speak_easy_favicon.jpg"> <!-- favicon -->
+		<link href="https://fonts.googleapis.com/css?family=Yesteryear" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave|Yesteryear" rel="stylesheet"> 
+
     <script>
     	$(document).ready( function() {
     		$("#username").attr({'autocomplete':'off',"required":"true"});
@@ -97,16 +99,17 @@
 
 	</head>
 	<body>
+		<!-- <h1>SpeakEasy</h1> -->
 		<div id="logo_02">
 			<img src="../static/Images/speak_easy_logo_02.jpg" width="768" height="256"/>
 		</div>
 		<div id="login_div">
 			<form id="login_form" method="POST" action="{{ url_for('login') }}">
 				<div>
-					<label>Username:</label><input type="text" id="username" name="username">
+					<label style="font-size:35px;">Username:</label><input type="text" id="username" name="username">
 				</div>
 				<div>
-					<label>Password:</label><input type="password" id="password" name="password">
+					<label style="font-size:35px;">Password:</label><input type="password" id="password" name="password">
 				</div>
 				<button type="submit">Login</button>
 				<span id="error_msg">Username and password do not match!</span>
@@ -117,15 +120,15 @@
       <div id="create_account_div">
         <span id="close_btn">&times;</span> <br>
         <form id="create_account_form" onsubmit="return false;">
-          <div style="height:70px;">
+          <div style="margin:auto;height:70px;width:320px;">
 
-            <label style="float:left;margin-top:5px;">Username:</label> 
+            <label class="create_account_label">Username:</label> 
             <input type="text" id="name" name="name">
             <span class="required">*</span><br><br>
-            <label style="float:left;margin-top:5px;">Password:</label>
+            <label class="create_account_label"">Password:</label>
             <input type="password" id="pw" name="pw">
             <span class="required">*</span><br><br>
-            <label style="float:left;margin-top:5px;">Verify Password:</label>
+            <label class="create_account_label">Verify:</label>
             <input type="password" id="v_pw" name="v_pw">
             <span class="required">*</span><br><br>
           </div> <br><br>
