@@ -3,10 +3,10 @@ This is a tutorial on how to run SpeakEasy on your own machine.
 
 ## Prerequisites
 
-### Python
+#### Python
 You must have Python installed (has been tested on 3.7, other versions may or may not work).
 
-### Python Packages
+#### Python Packages
 You must have the following Python Pip packages. 
 
 * flask
@@ -17,10 +17,10 @@ You must have the following Python Pip packages.
 
 To install just run `pip install ` and then the package name. 
 
-### MySQL Database
+#### MySQL Database
 You must have access to either a local MySQL database or one running somewhere online. 
 
-### Pusher API Keys
+#### Pusher API Keys
 SpeakEasy uses pusher to send messages between the server and the clients. To get the API keys create an account on https://pusher.com/ and register a web app.
 
 ## Setting up MySQL
