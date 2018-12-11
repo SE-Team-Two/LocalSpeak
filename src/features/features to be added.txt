@@ -1,0 +1,32 @@
+Scenario: User can create a new room
+  Given we are at the SpeakEasy website
+	And we successfully logged in
+  When we try to create a room
+  Then a room is created
+
+Scenario: User can select a created room
+  Given we are at the SpeakEasy website
+	And we successfully logged in
+  When we select a room
+  Then they see the selected rooms chat
+
+Scenario: User can go back to Global chat if they're in a created room
+  Given we are at the SpeakEasy website
+	And we successfully logged in
+    And we are in a created room
+  When we select Global chat
+  Then we can see the Global chat
+  
+Scenario: User can change their radius in the Settings menu
+  Given we are at the SpeakEasy website
+	And we successfully logged in
+  When we select the Settings tab
+    And we change the radius
+  Then the radius changes
+
+Scenario: Users can change their password in the Settings menu
+  Given we are at the SpeakEasy website
+	And we successfully logged in
+  When we select the Settings tab
+    And we change our password
+  Then the password changes
